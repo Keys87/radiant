@@ -1,0 +1,36 @@
+{
+    "userData": {
+        "f0b47208-61b7-4bf8-825f-2a41376028f4": {
+            "userName": "TEST", 
+            "id": "f0b47208-61b7-4bf8-825f-2a41376028f4",
+            "password": "",
+            "chatroomsIn": ["cb9b32ba-fd67-11ef-8b85-be11debb6c5c"]
+        },
+        "f60149ef-4463-42a8-b9b4-aa896a5d97ff": {
+            "userName": "DEV", 
+            "id": "f60149ef-4463-42a8-b9b4-aa896a5d97ff",
+            "password": "",
+            "chatroomsIn": ["cb9b32ba-fd67-11ef-8b85-be11debb6c5c"]
+        }
+    },
+    "messages": {
+        "cb9b32ba-fd67-11ef-8b85-be11debb6c5c": {
+            "cbf452b0-4f96-469b-b391-b326d1f7d9c8": {
+                "id": "cbf452b0-4f96-469b-b391-b326d1f7d9c8",
+                "sender": "TEST",
+                "content": "testing...",
+                "timeStamp": "2025-03-10:11:29:00",
+                "messageNumber": 0
+            }
+        }
+    },
+    "chatRooms": {
+        "cb9b32ba-fd67-11ef-8b85-be11debb6c5c": {
+            "name": "testDev",
+            "id": "cb9b32ba-fd67-11ef-8b85-be11debb6c5c",
+            "members": ["TEST", "DEV"],
+            "lastSessionNumber": 0,
+            "lastMessageId": "cbf452b0-4f96-469b-b391-b326d1f7d9c8"
+        }
+    }
+}
