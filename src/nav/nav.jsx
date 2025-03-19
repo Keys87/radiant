@@ -3,6 +3,7 @@ import { useState } from "react"
 import { User } from "./user"
 import { Settings } from "./setting"
 
+
 function ChatList({show}) {
     return (
         <section role="" className={`bg-black/40 w-52 flex-initial flex-col justify-center align-top border-e-2 ${show}`}>
@@ -47,7 +48,9 @@ return (
     {/* below is ChatList; before is nav*/}
     <ChatList show={showChat ? "block" : "hidden"}></ChatList>
     <Settings show={showSettings ? "block" : "hidden"}></Settings>
-    <User show={showUser ? "block" : "hidden"}></User>
+    <authInstanceContext.Provider value={auth}>
+        <User show={showUser ? "block" : "hidden"}></User>
+    </authInstanceContext.Provider>
  </nav>
 )
 }

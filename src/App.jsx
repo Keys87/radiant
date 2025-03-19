@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set, get } from "firebase/database";
 import { Navi } from "./nav/nav"
 import "bootstrap-icons/font/bootstrap-icons.css"
 import "./output.css"
-import { v4 } from "uuid"
-import { Authenticate } from "./auth/login";
-import { getAuth } from "firebase/auth";
+import { Authenticate } from "./auth/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+// import { getAnalytics } from "firebase/analytics";
+// import { getDatabase, ref, set, get } from "firebase/database";
+// import { v4 } from "uuid"
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
@@ -24,73 +24,42 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-const db = getDatabase(app);
-const auth = getAuth(app)
+// const db = getDatabase(app);
+export const auth = getAuth(app)
 
 function App() {
   const [input, setInput] = useState("")
   const [dev, setDev] = useState(false)
   const [user, setUser] = useState()
-  const [chatRoom, setChatRoom] = useState("")
 
   function handleAfterAuth(result) {
       //const credentials = GoogleAuthProvider.credentialFromResult(result)
       // const token = credentials.accessToken
   
       setUser(result.user)
-      set(ref(db, ))
+      
   }
 
-/*  function handleOnSend() {
-
-    const now = new Date();
-    let day = toString(now.getDate())
-    let month = toString(now.getMonth() + 1)
-    let year = now.getFullYear(); 
-    let hour = toString(now.getHours)
-    let minute = toString(now.getMinutes)
-    let fullDate = `${day}/${month}/${year}:${hour}:${minute}`;
-    let id = v4()
-
-    let lastMessage = get(ref(db, ``)) // need to get the chatrooms in rn
-    let name = user.name
-
-    let message = {
-      id: {
-        "id": id,
-        "sender": name, // handle this later | RESOLVED
-        "content": input,
-        "timeStamp": fullDate,
-        "messageNumber": 0
-      }
-    }     
-    set(ref(db), message)
-    
-  } */
-
-  /* if (user != null) {
-    return (
-      <section role="dev mode" className="absolute h-0.5 w-1 right-60">
-      <button type="button" onClick={() => setDev(!dev)} className="border bg-white w-max hover:bg-zinc-300">toggle dev mode</button>
-        <div className={`${dev ? "hidden" : "block"} flex flex-1 flex-row`}>
-          <input type="text" onChange={(event) => setInput(event.target.value)} className="border bg-white grow"/>
-          <button type="button" onClick={() => {handleOnSend()}} className="border bg-white grow hover:bg-zinc-300">send</button>
-        </div> 
-        <Navi></Navi>
-      </section>
-    )
-  } else {
-    return (
-      <section role="dev mode" className="absolute h-0.5 w-1 right-60">
-      <button type="button" onClick={() => setDev(!dev)} className="border bg-white w-max hover:bg-zinc-300">toggle dev mode</button>
-        <div className={`${dev ? "hidden" : "block"} flex flex-1 flex-row`}>
-          <input type="text" onChange={(event) => setInput(event.target.value)} className="border bg-white grow"/>
-          <button type="button" onClick={() => {handleOnSend()}} className="border bg-white grow hover:bg-zinc-300">send</button>
-        </div> 
-        <Authenticate></Authenticate>
-      </section>
-    )
-  } */
+  onAuthStateChanged(auth, (user) => {
+    if (user === null) {
+      return (
+        <section role="main">
+          <Authenticate authApp={auth} handleAfterAuth={handleAfterAuth}></Authenticate>
+        </section>
+      )
+    } else {
+      return (
+        <section role="dev mode" className="absolute h-0.5 w-1 right-60">
+        <button type="button" onClick={() => setDev(!dev)} className="border bg-white w-max hover:bg-zinc-300">toggle dev mode</button>
+          <div className={`${dev ? "hidden" : "block"} flex flex-1 flex-row`}>
+            <input type="text" onChange={(event) => setInput(event.target.value)} className="border bg-white grow"/>
+            <button type="button" onClick={() => {handleOnSend()}} className="border bg-white grow hover:bg-zinc-300">send</button>
+          </div> 
+          <Navi></Navi>
+        </section>
+      )
+    }
+  })
 }
 
 export default App
