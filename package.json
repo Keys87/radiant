@@ -11,7 +11,7 @@
     "tailwindcss": "npx tailwindcss -i src/input.css -o src/output.css --watch"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.15",
+    "@tailwindcss/vite": "^4.0.16",
     "bootstrap-icons": "^1.11.3",
     "firebase": "^11.4.0",
     "react": "^18.2.0",

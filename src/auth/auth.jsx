@@ -1,20 +1,57 @@
 /* eslint-disable react/prop-types */
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { useState } from "react";
-import { auth } from "../config";
+import { useEffect, useState } from "react";
+import { auth, db } from "../config";
+import { child, equalTo, onValue, orderByChild, push, query, ref, get } from "firebase/database";
+import { executeQuery } from "firebase/data-connect";
+/*
+so basically we must searched thru all users uid(the app-specific UID, not the push().key one) using orderBy and other funcs
+
+*/
 
 export function Authenticate({ handleAfterAuth }) {
     const provider = new GoogleAuthProvider()
     auth.languageCode = 'en'
 
     async function handleClickLogIn() {
-        // signInWithPopup(auth, provider).then(
-        //     (result) => {
-        //         console.log(result.UserObjectContext)
-        //     }
-        // )
-        const result = await signInWithPopup(auth, provider)
-        handleAfterAuth(result.user)
+        let authResult = await signInWithPopup(auth, provider)
+        let userExistQuery = query(ref(db, "userData"), orderByChild("uid"), equalTo(authResult.user.uid))
+
+        get(userExistQuery).then(
+            (snapshot) => {
+                if (snapshot.exists()) {
+                    console.log("user found, iniating log in")
+                    let userObject =  {
+                        "userName": `${authResult.user.displayName}`, 
+                        "uid": `${authResult.user.uid}`,
+                        "chatroomsIn": [""]
+                    }
+            
+                    console.log(`log in success; user-object:${userObject}`)
+                    handleAfterAuth(userObject)
+                } else {
+                    console.log("user NOT found, initiating sign up")
+
+                    let userObject =  {
+                        "userName": `${authResult.user.displayName}`, 
+                        "uid": `${authResult.user.uid}`,
+                        "chatroomsIn": [""]
+                    }
+                    let pushReferenceObject = push(ref(db, "userData"), userObject)
+            
+                    console.log(userObject)
+
+                    console.log(`sign up success; user-object:${userObject}`)
+                    handleAfterAuth(userObject)
+                }
+            }
+        ).catch(
+            (reason) => {
+                console.log(`error happened during auth, please delete manually the data; reason:\n\n ${reason}`)
+            }
+        )
+
+
     }
 
     return (

@@ -15,12 +15,13 @@ import { AuthInstanceContext, UserObjectContext, DBInstanceContext } from "./con
 
 function App() {
   const [user, setUser] = useState(null)
+  const [userObject, setUserObject] = useState(null)
   let nonStaticUser // iykyk; this variable will let us see instantly what does the user state is since it doesn't need to wait fora re-render
   // try replacing monitorAuthState to useEffect
 
   useEffect(
     () => {
-      const unsubscribe = onAuthStateChanged(auth, () => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
         setUser(user)
         nonStaticUser = user
         console.log(`unsubscribed from a listener[onAuthStateChanged]; user-instance: ${nonStaticUser} `)
@@ -30,9 +31,9 @@ function App() {
     }, []
   )
 
-  function handleAfterAuth(UserObjectContext) {
-    setUser(UserObjectContext)
-    nonStaticUser = UserObjectContext
+  function handleAfterAuth(userObject) {
+    setUserObject(userObject)
+    nonStaticUser = userObject
     console.log(nonStaticUser)
   }
 
