@@ -18,40 +18,39 @@ function NewChatroom() {
     const [toggle, setToggle] = useState(false)
     const [message, setMessage] = useState(undefined)
     const db = useContext(DBInstanceContext)
-    let nameInputValue = useRef(undefined)
-    let membersInputValue = useRef(undefined)
+    let nameInputValue = useRef("")
+    let membersInputValue = useRef("")
 
-    function handleCreateNewChatroom(name="", members="") {
+    function handleCreateNewChatroom() {
         /*
         make json
         toArray members
         json editAdd name
         json editAdd members
         */
-
-        if (name == "" || members == "") {
+        console.log(`value of name field: ${nameInputValue.current}`)
+        if (nameInputValue.current == "" || membersInputValue.current == "") {
             setToggle(true)
             setMessage("Please fill out every field")
         } else {
             setToggle(false)
             setMessage(undefined)
         }
-       
-        const id = v4()
-        const membersArray = String(members).split(",")
-        const chatroomObject = {
-            [id]: {
-                "name": name,
-                "id": id,
+
+        const membersArray = String(membersInputValue.current).split(",")
+        const chatRoomObject = {
+                "name": nameInputValue.current,
+                "id": "",
                 "members": membersArray,
                 "lastSessionNumber": 0,
                 "lastMessageId": ""
             }
-        }
-        const newChatroomRef = child(ref(db), "chatRooms") // same case as auth.jsx here
+        // same case as auth.jsx here
 
-       push(newChatroomRef, chatroomObject)
+       const pushObject = push(ref(db, "chatRooms"), chatRoomObject)
+       set(ref(db, `chatRooms/${pushObject.key}/id`), pushObject.key)
        removeEventListener("keydown")
+       console.log(`successfully created a new chat room; chatRoomObject: ${chatRoomObject}`)
     }
 
     return (
