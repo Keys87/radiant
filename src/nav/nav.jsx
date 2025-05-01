@@ -12,7 +12,7 @@ export function Navi() {
 
     return (
         <nav className="flex flex-initial flex-row h-auto">
-            <nav className="bg-black/40 flex flex-col justify-center align-top w-fit h-svh border-e-2">
+            <nav className="bg-black/40 flex flex-col justify-center align-top w-fit h-svh border-e-2 border-white">
                 <div className="flex flex-1 basis-2 flex-col py-2 ps-2">
                     <button type="button" onClick={() => {
                         setShowChat(false)

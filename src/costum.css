@@ -1,0 +1,5 @@
+.cs-gradient {
+    --color-cs-blue: rgb(30,7,144);
+    --color-cs-yellow: rgb(253,100,69);
+    background-image: linear-gradient(0.375turn, var(--color-cs-blue), var(--color-cs-yellow));
+}

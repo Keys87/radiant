@@ -1,3 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --color-cs-blue: oklch(32% 0.1891 275.27);
+    --color-cs-yellow: oklch(68% 0.1881 32.35);
+}
