@@ -1,5 +1,5 @@
 # radiant
-Radiant is a discord-like chatting application
+Radiant is a discord-like chatting application...or at least a try to make one
 
 ## Setup as a developer
 
@@ -12,12 +12,20 @@ Radiant is a discord-like chatting application
 ```
 npm i
 ```
-6. After all packages installed type the command below to run **vite and tailwindcss**
+6. After all packages are installed, type the command below to run **vite and tailwindcss**
+```
+npm run dev
+```
+7. Alternatively if step 6 **doesn't** work, you could:
+```
+npm run run-tailwind
+```
+and using another terminal window:
 ```
 npm run dev
 ```
 
 ## Contact info
-If there is problems with installation please contact me, and I will try to solve it
+If there are problems with installation, please contact me or submit an issue/pull request. I will try to solve them.
 
 **Email** => skykwoo2505@gmail.com
