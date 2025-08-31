@@ -22,11 +22,13 @@ export function User({show}) {
         <h3 className="font-bold text-2xl text-white ms-2 mt-2 text-center">
           Account
         </h3>
+        { userInstance?.photoURL && (       
         <img
           src={`${userInstance.photoURL}`}
           alt="profile picture"
           className="rounded-2xl place-self-center"
         />
+        )}
         <section className="flex flex-row items-center justify-center mt-2">
           <input
             type="text"
@@ -43,7 +45,7 @@ export function User({show}) {
         </section>
         <button
           type="button"
-          className="p-2 rounded-2xl bg-white text-center hover:bg-gray-300"
+          className="p-2 mt-2 rounded-2xl bg-white text-center hover:bg-gray-300 self-center"
           onClick={() => {
             console.log(`${authInstance}`);
             signOut(authInstance);

@@ -1,6 +1,11 @@
 from dataclasses import dataclass
 import math
 
+"""oklab.py
+This file was a copied code from a currently unknown source to convert okLAB colors to and from RGB
+
+"""
+
 @dataclass
 class Lab:
     L: float

@@ -65,10 +65,10 @@ function NewChatroom() {
       // the code below is fcked
       <>
         {toggle ? (
-          <div className="flex flex-auto h-screen items-center justify-center bg-black/50 absolute top-0 left-0 w-screen">
+          <div className="flex flex-auto h-screen items-center justify-center bg-black absolute top-0 left-0 w-screen">
             <form className="border-2 rounded-3xl border-white bg-transparent w-auto flex flex-initial flex-col p-2">
               <h3 className="font-bold text-lg text-white text-center">
-                Create New Chatroom
+                Create New Chatroom (ESC to cancel)
               </h3>
               <label htmlFor="name" className="text-white mt-6">
                 Chatroom Name
