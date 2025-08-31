@@ -11,8 +11,8 @@ export function Navi() {
     const [showUser, setShowUser] = useState(false);
 
     return (
-        <nav className="flex flex-initial flex-row h-auto">
-            <nav className="bg-black/40 flex flex-col justify-center align-top w-fit h-svh border-e-2 border-white">
+        <nav className="flex flex-initial flex-row h-auto w-full">
+            <div className="bg-black/40 flex w-fill flex-col justify-center align-top1 h-svh border-e-2 border-white">
                 <div className="flex flex-1 basis-2 flex-col py-2 ps-2">
                     <button type="button" onClick={() => {
                         setShowChat(false)
@@ -37,7 +37,7 @@ export function Navi() {
                 }} className="bottom-1 relative p-2 rounded-full">
                     <i className="bi bi-gear-fill text-3xl text-white hover:text-gray-300"></i>
                 </button>
-            </nav>
+            </div>
             {/* below is ChatList; before is nav*/}
             <ChatRoomsList show={showChat ? "block" : "hidden"}></ChatRoomsList>
             <Settings show={showSettings ? "block" : "hidden"}></Settings>

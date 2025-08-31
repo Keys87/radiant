@@ -4,50 +4,51 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../config";
 import { child, equalTo, onValue, orderByChild, push, query, ref, get } from "firebase/database";
 import { executeQuery } from "firebase/data-connect";
-/*
-so basically we must searched thru all users uid(the app-specific UID, not the push().key one) using orderBy and other funcs
-
-*/
 
 export function Authenticate({ handleAfterAuth }) {
     const provider = new GoogleAuthProvider()
     auth.languageCode = 'en'
 
     async function handleClickLogIn() {
+        /*
+        so basically we must search thru all users uid 
+        using query, orderBy, and other funcs
+        */
+
         let authResult = await signInWithPopup(auth, provider)
         let userExistQuery = query(ref(db, "userData"), orderByChild("uid"), equalTo(authResult.user.uid))
+        // this is the query
 
         get(userExistQuery).then(
             (snapshot) => {
                 if (snapshot.exists()) {
                     console.log("user found, iniating log in")
-                    let userObject =  {
-                        "userName": `${authResult.user.displayName}`, 
-                        "uid": `${authResult.user.uid}`,
-                        "chatroomsIn": [""]
-                    }
-            
-                    console.log(`log in success; user-object:${userObject}`)
-                    handleAfterAuth(userObject)
+                    console.log(`log in success; user-name:${authResult.user.displayName}`)
+
+                    // take your eyes on break
+
                 } else {
                     console.log("user NOT found, initiating sign up")
 
                     let userObject =  {
                         "userName": `${authResult.user.displayName}`, 
-                        "uid": `${authResult.user.uid}`,
+                        "uid": ``,
                         "chatroomsIn": [""]
                     }
-                    let pushReferenceObject = push(ref(db, "userData"), userObject)
-            
-                    console.log(userObject)
+                    const pushRef = push(ref(db, "userData"), userObject)
+                    const updates = {}
+                    updates[`/userData/${pushRef.key}/uid`] = pushRef.key 
 
-                    console.log(`sign up success; user-object:${userObject}`)
-                    handleAfterAuth(userObject)
+                    // line 34 till 36 
+                    // they update the blank UID to use the push key
+
                 }
             }
         ).catch(
             (reason) => {
-                console.log(`error happened during auth, please delete manually the data; reason:\n\n ${reason}`)
+                console.log(`error happened during auth, please delete manually the data; error-msg:\n\n ${reason}`)
+                
+                // error handling
             }
         )
 

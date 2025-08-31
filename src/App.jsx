@@ -15,43 +15,32 @@ import { AuthInstanceContext, UserObjectContext, DBInstanceContext } from "./con
 
 function App() {
   const [user, setUser] = useState(null)
-  const [userObject, setUserObject] = useState(null)
-  let nonStaticUser // iykyk; this variable will let us see instantly what does the user state is since it doesn't need to wait fora re-render
-  // try replacing monitorAuthState to useEffect
 
   useEffect(
     () => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         setUser(user)
-        nonStaticUser = user
-        console.log(`unsubscribed from a listener[onAuthStateChanged]; user-instance: ${nonStaticUser} `)
+        console.log(`unsubscribed from a listener[onAuthStateChanged]; user-name-b4-render: ${user} `)
       })
 
       return unsubscribe
     }, []
   )
 
-  function handleAfterAuth(userObject) {
-    setUserObject(userObject)
-    nonStaticUser = userObject
-    console.log(nonStaticUser)
-  }
-
-
-
   return (
-    <section role="main">
-      {user ? (
-        <DBInstanceContext.Provider value={db}>
-          <UserObjectContext.Provider value={user ? user : nonStaticUser}>
-            <AuthInstanceContext.Provider value={auth}>
-              <Navi />
-            </AuthInstanceContext.Provider>
-          </UserObjectContext.Provider>
-        </DBInstanceContext.Provider>
-      ) : (
-        <Authenticate handleAfterAuth={handleAfterAuth} />
-      )}
+    <section role="main" className="grid grid-cols-3 grid-rows-1">
+         { user ? (
+            <DBInstanceContext.Provider value={db}>
+              <UserObjectContext.Provider value={user}>
+                <AuthInstanceContext.Provider value={auth}>
+                  <Navi />
+                </AuthInstanceContext.Provider>
+              </UserObjectContext.Provider>
+            </DBInstanceContext.Provider>
+          ) : (
+            <Authenticate/>
+          )
+        }
     </section>
   );
 
